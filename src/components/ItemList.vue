@@ -1,0 +1,83 @@
+<template>
+  <div>
+    <div
+      v-if="isLoading"
+    >
+      .... loading ....
+    </div>
+    <div class="columns" v-else-if="items">
+      <div 
+        class="column is-one-quarter"
+        v-for="item in items"
+      >
+        <div
+          class="card"
+        >
+          <div class="card-image">
+            <figure class="image is-3by2">
+              <img :src="item.picture"/>
+            </figure>
+          </div>
+          <div class="card-content">
+            <router-link :to="`/${item.id}`">
+              <h2>{{ item.name }}</h2>
+            </router-link>
+            <div>{{ item.price }}</div>
+            <ul>
+              <li
+                v-for="tag in item.tags"
+              >
+                <a
+                  href="#"
+                  class="tag is-primary"
+                >
+                  {{ tag }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import axios from 'axios';
+  import 'bulma/css/bulma.css';
+
+  export default {
+    name: 'item-list',
+
+    data() {
+      return {
+        endpoint: 'http://localhost:3005/nodes',
+        items: null,
+        isLoading: true,
+      };
+    },
+
+    methods: {
+      getItems() {
+        axios.get(this.endpoint)
+          .then((response) => {
+            this.items = response.data;
+            this.isLoading = false;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      },
+    },
+
+    created() {
+      this.getItems();
+    },
+  };
+</script>
+
+<style scoped>
+  .columns {
+    flex-wrap: wrap;
+  }
+</style>
