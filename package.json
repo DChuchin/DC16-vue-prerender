@@ -5,14 +5,16 @@
   "author": "Dmitry <dime10cents@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "json-server --watch src/data/db.json -p3005 & node build/dev-server.js",
+    "dev": "json-server --watch src/data/db.json -p3030 & node build/dev-server.js",
     "start": "npm run dev",
     "build": "node build/build.js",
-    "lint": "eslint --ext .js,.vue src"
+    "lint": "eslint --ext .js,.vue src",
+    "json-server": "json-server --watch src/data/db.json -p3030"
   },
   "dependencies": {
     "axios": "^0.17.0",
     "bulma": "^0.6.0",
+    "prerender-spa-plugin": "^2.1.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

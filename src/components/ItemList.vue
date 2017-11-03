@@ -23,18 +23,6 @@
               <h2>{{ item.name }}</h2>
             </router-link>
             <div>{{ item.price }}</div>
-            <ul>
-              <li
-                v-for="tag in item.tags"
-              >
-                <a
-                  href="#"
-                  class="tag is-primary"
-                >
-                  {{ tag }}
-                </a>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
@@ -51,7 +39,7 @@
 
     data() {
       return {
-        endpoint: 'http://localhost:3005/nodes',
+        endpoint: 'http://localhost:3030/nodes',
         items: null,
         isLoading: true,
       };
@@ -63,6 +51,9 @@
           .then((response) => {
             this.items = response.data;
             this.isLoading = false;
+
+            // dispatch event to start prerender
+            document.dispatchEvent(new Event('custom-post-render-event'));
           })
           .catch((error) => {
             console.log(error);

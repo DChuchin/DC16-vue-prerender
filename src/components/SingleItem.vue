@@ -22,7 +22,7 @@
 
     data() {
       return {
-        endpoint: 'http://localhost:3005/nodes',
+        endpoint: 'http://localhost:3030/nodes',
         item: null,
         isLoading: true,
       };
@@ -34,6 +34,9 @@
           .then((response) => {
             console.log('answer');
             this.item = response.data;
+
+            // dispatch event to start prerender
+            document.dispatchEvent(new Event('custom-post-render-event'));
           })
           .catch((error) => {
             console.log(error);
