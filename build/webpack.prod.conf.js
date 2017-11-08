@@ -9,17 +9,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
-const PrerenderSpaPlugin = require('prerender-spa-plugin')
-const axios = require('axios')
-
-const routes = axios.get('http://localhost:3030/nodes')
-  .then((res) => {
-    const r =  res.data.map((item) => {
-      return `/${item.id}`
-    })
-    console.log(r)
-    return r
-  })
 
 const env = config.build.env
 
@@ -105,20 +94,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ]),
-    // prerendering
-    new PrerenderSpaPlugin(
-      // Absolute path to compiled SPA
-      path.join(__dirname, '../dist'),
-      // List of routes to prerender
-      [ '/' ],
-      {
-        captureAfterTime: 5000,
-        // captureAfterDocumentEvent: 'custom-post-render-event'
-        // This is how you would trigger this example event:
-        // document.dispatchEvent(new Event('custom-post-render-event'))
-      }
-    )
+    ])
   ]
 })
 
