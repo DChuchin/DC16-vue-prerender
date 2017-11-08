@@ -48,9 +48,6 @@
         axios.get(`${this.endpoint}/${this.id}`)
           .then((response) => {
             this.item = response.data;
-
-            // dispatch event to start prerender
-            document.dispatchEvent(new Event('custom-post-render-event'));
           })
           .catch((error) => {
             console.log(error);

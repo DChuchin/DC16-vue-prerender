@@ -36,7 +36,6 @@
       return {
         endpoint: 'http://localhost:3030/nodes',
         items: null,
-        isLoading: true,
       };
     },
 
@@ -46,9 +45,6 @@
           .then((response) => {
             this.items = response.data;
             this.isLoading = false;
-
-            // dispatch event to start prerender
-            document.dispatchEvent(new Event('custom-post-render-event'));
           })
           .catch((error) => {
             console.log(error);
