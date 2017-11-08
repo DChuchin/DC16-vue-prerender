@@ -1,20 +1,17 @@
 <template>
   <div>
-    <div class="columns">
+    <div class="columns" v-if="item">
       <div class=" column is-one-third">
         <figure class="image is-3by2">
-          <img :src="item.picture"/>
+          <img :src="item.url"/>
         </figure>
       </div>
       <div class="column">
         <div class="title">
-          {{ item.name }}
-        </div>
-        <div class="subtitle">
-          {{ item.price }}
+          {{ item.title }}
         </div>
         <div>
-          {{ item.description }}
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis temporibus pariatur architecto itaque maxime quae consectetur explicabo! Debitis tempore atque, modi soluta at, quia quas corrupti, non libero unde tempora beatae vitae vero dolores deleniti placeat quae odio adipisci repudiandae ipsa illo harum hic nihil natus! Nostrum aliquid maxime quasi.
         </div>
         <router-link to="/"> < Back </router-link>
       </div>
@@ -37,7 +34,7 @@
 
     data() {
       return {
-        endpoint: 'http://localhost:3030/nodes',
+        endpoint: 'https://jsonplaceholder.typicode.com/photos',
         item: null,
         isLoading: true,
       };
