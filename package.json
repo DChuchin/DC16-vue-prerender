@@ -5,7 +5,7 @@
   "author": "Dmitry <dime10cents@gmail.com>",
   "private": true,
   "scripts": {
-    "dev": "json-server --watch src/data/db.json -p3030 & node build/dev-server.js",
+    "dev": "npm run json-server & node build/dev-server.js",
     "start": "npm run dev",
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src",

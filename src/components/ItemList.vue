@@ -1,11 +1,6 @@
 <template>
   <div>
-    <div
-      v-if="isLoading"
-    >
-      .... loading ....
-    </div>
-    <div class="columns" v-else-if="items">
+    <div class="columns" v-if="items">
       <div 
         class="column is-one-quarter"
         v-for="item in items"
@@ -61,7 +56,7 @@
       },
     },
 
-    created() {
+    mounted() {
       this.getItems();
     },
   };

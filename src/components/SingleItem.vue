@@ -1,9 +1,24 @@
 <template>
   <div>
-    <router-link to="/"> < Back </router-link>
-    <pre v-if="item">
-      {{ item }}
-    </pre>
+    <div class="columns">
+      <div class=" column is-one-third">
+        <figure class="image is-3by2">
+          <img :src="item.picture"/>
+        </figure>
+      </div>
+      <div class="column">
+        <div class="title">
+          {{ item.name }}
+        </div>
+        <div class="subtitle">
+          {{ item.price }}
+        </div>
+        <div>
+          {{ item.description }}
+        </div>
+        <router-link to="/"> < Back </router-link>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -32,7 +47,6 @@
       getItem() {
         axios.get(`${this.endpoint}/${this.id}`)
           .then((response) => {
-            console.log('answer');
             this.item = response.data;
 
             // dispatch event to start prerender
@@ -44,7 +58,7 @@
       },
     },
 
-    created() {
+    mounted() {
       this.getItem();
     },
   };
