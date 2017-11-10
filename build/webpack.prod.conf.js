@@ -9,6 +9,13 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const PrerenderSpaPlugin = require('prerender-spa-plugin')
+
+//** Dynamic routes **
+const Request = require('sync-request')
+const res = Request('GET','https://jsonplaceholder.typicode.com/photos');
+const routes = JSON.parse(res.getBody('utf8')).slice(0, 20).map((item) => `/${item.id}`)
+//*
 
 const env = config.build.env
 
@@ -30,6 +37,19 @@ const webpackConfig = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': env
     }),
+    // prerendering
+    new PrerenderSpaPlugin(
+      // Absolute path to compiled SPA
+      path.join(__dirname, '../dist'),
+      // List of routes to prerender
+      [ '/', ...routes ],
+      {
+        captureAfterTime: 5000,
+        // captureAfterDocumentEvent: 'custom-post-render-event'
+        // This is how you would trigger this example event:
+        // document.dispatchEvent(new Event('custom-post-render-event'))
+      }
+    ),
     // UglifyJs do not support ES6+, you can also use babel-minify for better treeshaking: https://github.com/babel/minify
     new webpack.optimize.UglifyJsPlugin({
       compress: {
@@ -57,7 +77,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       inject: true,
       minify: {
         removeComments: true,
-        collapseWhitespace: true,
+        collapseWhitespace: false,
         removeAttributeQuotes: true
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference

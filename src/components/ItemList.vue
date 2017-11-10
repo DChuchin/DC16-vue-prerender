@@ -3,8 +3,7 @@
     <div class="columns" v-if="items">
       <div 
         class="column is-one-quarter"
-        v-for="item in items"
-        :key="item.id"
+        v-for="item in filteredItems"
       >
         <div
           class="card"
@@ -21,14 +20,19 @@
           </div>
         </div>
       </div>
+      <button
+      class="button is-primary"
+        v-if="itemsCount >= itemsPerPage"
+        @click="showNext(12)"
+      >
+        Show next 12
+      </button>
     </div>
-    <pre-loader v-else/>
   </div>
 </template>
 
 <script>
   import axios from 'axios';
-  import PreLoader from '@/components/PreLoader';
   import 'bulma/css/bulma.css';
 
   export default {
@@ -38,7 +42,18 @@
       return {
         endpoint: 'https://jsonplaceholder.typicode.com/photos',
         items: null,
+        itemsPerPage: 12,
       };
+    },
+
+    computed: {
+      filteredItems() {
+        return this.items.slice(0, this.itemsPerPage);
+      },
+
+      itemsCount() {
+        return this.items.length;
+      },
     },
 
     methods: {
@@ -51,14 +66,14 @@
             console.log(error);
           });
       },
+
+      showNext(num) {
+        this.itemsPerPage += num;
+      },
     },
 
     mounted() {
       this.getItems();
-    },
-
-    components: {
-      PreLoader,
     },
   };
 </script>
@@ -66,5 +81,8 @@
 <style scoped>
   .columns {
     flex-wrap: wrap;
+  }
+  .button {
+    width: 100%;
   }
 </style>

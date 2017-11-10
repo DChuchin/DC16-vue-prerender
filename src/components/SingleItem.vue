@@ -36,7 +36,6 @@
       return {
         endpoint: 'https://jsonplaceholder.typicode.com/photos',
         item: null,
-        isLoading: true,
       };
     },
 
@@ -57,7 +56,3 @@
     },
   };
 </script>
-
-<style scoped>
-
-</style>
